@@ -1,0 +1,39 @@
+enum TaskPriority {
+  low
+  medium
+  high
+  critical
+}
+
+enum TaskStatus {
+  backlog
+  todo
+  in_progress @map("in-progress")
+  done
+}
+
+model Task {
+  id          String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title       String       @db.VarChar(200)
+  description String?      @db.Text
+  priority    TaskPriority
+  status      TaskStatus   @default(backlog)
+  position    Int          @default(0)
+
+  assigneeId String? @map("assignee_id") @db.Uuid
+  createdBy  String  @map("created_by") @db.Uuid
+
+  dueDate   DateTime? @map("due_date") @db.Date
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  assignee User? @relation("TaskAssignee", fields: [assigneeId], references: [id])
+  creator  User  @relation("TaskCreator", fields: [createdBy], references: [id])
+
+  @@index([status], map: "idx_tasks_status")
+  @@index([assigneeId], map: "idx_tasks_assignee")
+  @@index([priority], map: "idx_tasks_priority")
+  @@index([dueDate], map: "idx_tasks_due_date")
+
+  @@map("tasks")
+}
