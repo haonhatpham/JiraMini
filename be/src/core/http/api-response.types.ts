@@ -12,9 +12,15 @@ export type PaginatedResponse<T> = {
   };
 };
 
-export type ErrorResponse = {
-  status: number;
+export type ErrorDetail = {
+  field: string;
   message: string;
-  code: string;
-  details?: Record<string, unknown>;
+};
+
+export type ErrorResponse = {
+  error: {
+    code: string;
+    message: string;
+    details?: ErrorDetail[];
+  };
 };

@@ -17,29 +17,52 @@ export const taskSortFieldSchema = z.enum([
 ]);
 export const sortOrderSchema = z.enum(["asc", "desc"]);
 
-export const uuidSchema = z.string().uuid();
+export const uuidSchema = z.guid();
 export const dateOnlySchema = z
   .string()
   .regex(/^\d{4}-\d{2}-\d{2}$/, "Expected date format YYYY-MM-DD");
 
-const nullableTextSchema = z.preprocess(
+const emptyStringToUndefined = (value: unknown) =>
+  value === "" ? undefined : value;
+
+const toQueryArray = (value: unknown): unknown => {
+  if (value === "" || value === undefined) {
+    return undefined;
+  }
+
+  const values = Array.isArray(value) ? value : [value];
+  const normalizedValues = values.flatMap((item) =>
+    typeof item === "string" ? item.split(",") : item,
+  );
+  const filteredValues = normalizedValues.filter((item) => item !== "");
+
+  return filteredValues.length > 0 ? filteredValues : undefined;
+};
+
+const nullableTextValueSchema = z.preprocess(
   (value) => (value === "" ? null : value),
-  z.string().trim().max(10_000).nullable().optional(),
+  z.string().trim().max(10_000).nullable(),
 );
 
-const nullableUuidSchema = z.preprocess(
+const nullableTextSchema = nullableTextValueSchema.optional();
+
+const nullableUuidValueSchema = z.preprocess(
   (value) => (value === "" ? null : value),
-  uuidSchema.nullable().optional(),
+  uuidSchema.nullable(),
 );
 
-const nullableDateOnlySchema = z.preprocess(
+const nullableUuidSchema = nullableUuidValueSchema.optional();
+
+const nullableDateOnlyValueSchema = z.preprocess(
   (value) => (value === "" ? null : value),
-  dateOnlySchema.nullable().optional(),
+  dateOnlySchema.nullable(),
 );
+
+const nullableDateOnlySchema = nullableDateOnlyValueSchema.optional();
 
 export const taskUserResponseSchema = z.object({
   id: uuidSchema,
-  email: z.string().email(),
+  email: z.email(),
   name: z.string(),
   avatarUrl: z.string().nullable(),
 });
@@ -54,24 +77,64 @@ export const taskResponseSchema = z.object({
   assigneeId: uuidSchema.nullable(),
   createdBy: uuidSchema,
   dueDate: dateOnlySchema.nullable(),
-  createdAt: z.string().datetime(),
-  updatedAt: z.string().datetime(),
+  createdAt: z.iso.datetime(),
+  updatedAt: z.iso.datetime(),
   assignee: taskUserResponseSchema.nullable(),
   creator: taskUserResponseSchema,
 });
 
 export const listTasksSchema = z.object({
-  query: z.object({
-    status: taskStatusSchema.optional(),
-    priority: taskPrioritySchema.optional(),
-    assigneeId: uuidSchema.optional(),
-    createdBy: uuidSchema.optional(),
-    search: z.string().trim().min(1).max(100).optional(),
-    page: z.coerce.number().int().positive().default(1),
-    limit: z.coerce.number().int().positive().max(100).default(20),
-    sortBy: taskSortFieldSchema.default("position"),
-    sortOrder: sortOrderSchema.default("asc"),
-  }),
+  query: z
+    .object({
+      status: z.preprocess(emptyStringToUndefined, taskStatusSchema.optional()),
+      priority: z.preprocess(
+        toQueryArray,
+        z.array(taskPrioritySchema).optional(),
+      ),
+      assigneeId: z.preprocess(emptyStringToUndefined, uuidSchema.optional()),
+      createdBy: z.preprocess(emptyStringToUndefined, uuidSchema.optional()),
+      dueDateFrom: z.preprocess(
+        emptyStringToUndefined,
+        dateOnlySchema.optional(),
+      ),
+      dueDateTo: z.preprocess(
+        emptyStringToUndefined,
+        dateOnlySchema.optional(),
+      ),
+      search: z.preprocess(
+        emptyStringToUndefined,
+        z.string().trim().min(1).max(100).optional(),
+      ),
+      page: z.preprocess(
+        emptyStringToUndefined,
+        z.coerce.number().int().positive().default(1),
+      ),
+      limit: z.preprocess(
+        emptyStringToUndefined,
+        z.coerce.number().int().positive().max(100).default(20),
+      ),
+      sortBy: z.preprocess(
+        emptyStringToUndefined,
+        taskSortFieldSchema.default("position"),
+      ),
+      sortOrder: z.preprocess(
+        emptyStringToUndefined,
+        sortOrderSchema.default("asc"),
+      ),
+    })
+    .superRefine((query, ctx) => {
+      if (
+        query.dueDateFrom &&
+        query.dueDateTo &&
+        query.dueDateFrom > query.dueDateTo
+      ) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["dueDateTo"],
+          message: "Due date end must be after start",
+        });
+      }
+    }),
 });
 
 export const getTaskByIdSchema = z.object({
@@ -89,7 +152,6 @@ export const createTaskSchema = z.object({
       status: taskStatusSchema.default("backlog"),
       position: z.coerce.number().int().min(0).default(0),
       assigneeId: nullableUuidSchema,
-      createdBy: uuidSchema,
       dueDate: nullableDateOnlySchema,
     })
     .strict(),
@@ -97,18 +159,15 @@ export const createTaskSchema = z.object({
 
 const updateTaskBodySchema = z
   .object({
-    title: z.string().trim().min(1, "Title is required").max(200).optional(),
-    description: nullableTextSchema,
-    priority: taskPrioritySchema.optional(),
-    status: taskStatusSchema.optional(),
-    position: z.coerce.number().int().min(0).optional(),
-    assigneeId: nullableUuidSchema,
-    dueDate: nullableDateOnlySchema,
+    title: z.string().trim().min(1, "Title is required").max(200),
+    description: nullableTextValueSchema,
+    priority: taskPrioritySchema,
+    status: taskStatusSchema,
+    position: z.coerce.number().int().min(0),
+    assigneeId: nullableUuidValueSchema,
+    dueDate: nullableDateOnlyValueSchema,
   })
-  .strict()
-  .refine((value) => Object.keys(value).length > 0, {
-    message: "At least one field is required",
-  });
+  .strict();
 
 export const updateTaskSchema = z.object({
   params: z.object({

@@ -1,0 +1,29 @@
+node_modules/
+dist/
+build/
+coverage/
+.env
+.env.local
+.DS_Store
+.vscode/
+.idea/
+*.log
+tsconfig.tsbuildinfo
+npm-debug.log
+yarn-error.log
+pnpm-debug.log
+coverage/
+.idea/
+*.tgz
+*/.cache
+
+# TypeScript
+*.tsbuildinfo
+
+# Optional
+.DS_Store
+Thumbs.db
+
+# local env
+.env.local
+.env.*.local

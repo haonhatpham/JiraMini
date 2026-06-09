@@ -1,4 +1,4 @@
-import { Prisma, TaskStatus as PrismaTaskStatus } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { BadRequestException, NotFoundException } from '@/core/exceptions/common.exception.js';
 import { prisma } from '@/core/database/prisma.js';
 import { listTasksResponseSchema } from './task.schema.js';
@@ -13,14 +13,16 @@ import type {
   UpdateTaskStatusBody
 } from './task.schema.js';
 
+type PrismaTaskStatusValue = NonNullable<Prisma.TaskUncheckedCreateInput['status']>;
+
 const taskInclude = {
   assignee: true,
   creator: true
 } as const;
 
 export default class TaskService {
-  public async findAll(query: ListTasksQuery): Promise<ListTasksResponse> {
-    const where = this.buildWhere(query);
+  public async findAll(query: ListTasksQuery, userId: string): Promise<ListTasksResponse> {
+    const where = this.buildScopedWhere(query, userId);
     const skip = (query.page - 1) * query.limit;
     const orderBy = {
       [query.sortBy]: query.sortOrder
@@ -50,11 +52,9 @@ export default class TaskService {
     });
   }
 
-  public async findById(id: string): Promise<TaskResponse> {
-    const task = await prisma.task.findUnique({
-      where: {
-        id
-      },
+  public async findById(id: string, userId: string): Promise<TaskResponse> {
+    const task = await prisma.task.findFirst({
+      where: this.buildTaskAccessWhere(id, userId),
       include: taskInclude
     });
 
@@ -65,8 +65,10 @@ export default class TaskService {
     return mapTask(task);
   }
 
-  public async create(input: CreateTaskBody): Promise<TaskResponse> {
-    await this.assertUsersExist(input.createdBy, input.assigneeId);
+  public async create(input: CreateTaskBody, createdBy: string): Promise<TaskResponse> {
+    const assigneeId = input.assigneeId ?? null;
+
+    await this.assertUsersExist(createdBy, assigneeId);
 
     try {
       const task = await prisma.task.create({
@@ -76,8 +78,8 @@ export default class TaskService {
           priority: input.priority,
           status: this.toPrismaStatus(input.status),
           position: input.position,
-          assigneeId: input.assigneeId ?? null,
-          createdBy: input.createdBy,
+          assigneeId,
+          createdBy,
           dueDate: this.toDate(input.dueDate)
         },
         include: taskInclude
@@ -89,7 +91,9 @@ export default class TaskService {
     }
   }
 
-  public async update(id: string, input: UpdateTaskBody): Promise<TaskResponse> {
+  public async update(id: string, input: UpdateTaskBody, userId: string): Promise<TaskResponse> {
+    await this.assertTaskAccessible(id, userId);
+
     if ('assigneeId' in input) {
       await this.assertUsersExist(undefined, input.assigneeId);
     }
@@ -109,17 +113,39 @@ export default class TaskService {
     }
   }
 
-  public async updateStatus(id: string, input: UpdateTaskStatusBody): Promise<TaskResponse> {
+  public async updateStatus(id: string, input: UpdateTaskStatusBody, userId: string): Promise<TaskResponse> {
     try {
-      const task = await prisma.task.update({
-        where: {
-          id
-        },
-        data: {
-          status: this.toPrismaStatus(input.status),
-          position: input.position
-        },
-        include: taskInclude
+      const task = await prisma.$transaction(async (tx) => {
+        const currentTask = await tx.task.findFirst({
+          where: this.buildTaskAccessWhere(id, userId),
+          include: taskInclude
+        });
+
+        if (!currentTask) {
+          throw new NotFoundException('Task not found', 'TASK_NOT_FOUND');
+        }
+
+        const oldStatus = this.fromPrismaStatus(currentTask.status);
+        const newStatus = input.status;
+        const oldPosition = currentTask.position;
+        const newPosition = await this.resolveMovePosition(tx, oldStatus, newStatus, input.position);
+
+        if (oldStatus === newStatus) {
+          await this.reorderWithinStatus(tx, oldStatus, oldPosition, newPosition);
+        } else {
+          await this.moveAcrossStatuses(tx, oldStatus, newStatus, oldPosition, newPosition);
+        }
+
+        return tx.task.update({
+          where: {
+            id
+          },
+          data: {
+            status: this.toPrismaStatus(newStatus),
+            position: newPosition
+          },
+          include: taskInclude
+        });
       });
 
       return mapTask(task);
@@ -128,7 +154,9 @@ export default class TaskService {
     }
   }
 
-  public async delete(id: string): Promise<void> {
+  public async delete(id: string, userId: string): Promise<void> {
+    await this.assertTaskAccessible(id, userId);
+
     try {
       await prisma.task.delete({
         where: {
@@ -144,28 +172,64 @@ export default class TaskService {
     const where: Prisma.TaskWhereInput = {};
 
     if (query.status) where.status = this.toPrismaStatus(query.status);
-    if (query.priority) where.priority = query.priority;
+    if (query.priority?.length) where.priority = { in: query.priority };
     if (query.assigneeId) where.assigneeId = query.assigneeId;
     if (query.createdBy) where.createdBy = query.createdBy;
 
+    if (query.dueDateFrom || query.dueDateTo) {
+      where.dueDate = {
+        ...(query.dueDateFrom ? { gte: this.toDateFilterValue(query.dueDateFrom) } : {}),
+        ...(query.dueDateTo ? { lte: this.toDateFilterValue(query.dueDateTo) } : {})
+      };
+    }
+
     if (query.search) {
-      where.OR = [
-        {
-          title: {
-            contains: query.search,
-            mode: 'insensitive'
-          }
-        },
-        {
-          description: {
-            contains: query.search,
-            mode: 'insensitive'
-          }
-        }
-      ];
+      where.title = {
+        contains: query.search,
+        mode: 'insensitive'
+      };
     }
 
     return where;
+  }
+
+  private buildUserTaskScope(userId: string): Prisma.TaskWhereInput {
+    return {
+      OR: [
+        {
+          createdBy: userId
+        },
+        {
+          assigneeId: userId
+        }
+      ]
+    };
+  }
+
+  private buildScopedWhere(query: ListTasksQuery, userId: string): Prisma.TaskWhereInput {
+    return {
+      AND: [this.buildWhere(query), this.buildUserTaskScope(userId)]
+    };
+  }
+
+  private buildTaskAccessWhere(id: string, userId: string): Prisma.TaskWhereInput {
+    return {
+      id,
+      ...this.buildUserTaskScope(userId)
+    };
+  }
+
+  private async assertTaskAccessible(id: string, userId: string): Promise<void> {
+    const task = await prisma.task.findFirst({
+      where: this.buildTaskAccessWhere(id, userId),
+      select: {
+        id: true
+      }
+    });
+
+    if (!task) {
+      throw new NotFoundException('Task not found', 'TASK_NOT_FOUND');
+    }
   }
 
   private toUpdateData(input: UpdateTaskBody): Prisma.TaskUncheckedUpdateInput {
@@ -182,12 +246,124 @@ export default class TaskService {
     return data;
   }
 
-  private toPrismaStatus(status: TaskStatus): PrismaTaskStatus {
-    return status === 'in-progress' ? PrismaTaskStatus.in_progress : status;
+  private async resolveMovePosition(
+    tx: Prisma.TransactionClient,
+    oldStatus: TaskStatus,
+    newStatus: TaskStatus,
+    requestedPosition: number
+  ): Promise<number> {
+    const isSameStatus = oldStatus === newStatus;
+    const targetStatusTaskCount = await tx.task.count({
+      where: {
+        status: this.toPrismaStatus(newStatus)
+      }
+    });
+    const maxPosition = isSameStatus ? Math.max(targetStatusTaskCount - 1, 0) : targetStatusTaskCount;
+
+    return Math.min(Math.max(requestedPosition, 0), maxPosition);
+  }
+
+  private async reorderWithinStatus(
+    tx: Prisma.TransactionClient,
+    status: TaskStatus,
+    oldPosition: number,
+    newPosition: number
+  ): Promise<void> {
+    if (newPosition === oldPosition) {
+      return;
+    }
+
+    if (newPosition < oldPosition) {
+      await tx.task.updateMany({
+        where: {
+          status: this.toPrismaStatus(status),
+          position: {
+            gte: newPosition,
+            lt: oldPosition
+          }
+        },
+        data: {
+          position: {
+            increment: 1
+          }
+        }
+      });
+
+      return;
+    }
+
+    await tx.task.updateMany({
+      where: {
+        status: this.toPrismaStatus(status),
+        position: {
+          gt: oldPosition,
+          lte: newPosition
+        }
+      },
+      data: {
+        position: {
+          decrement: 1
+        }
+      }
+    });
+  }
+
+  private async moveAcrossStatuses(
+    tx: Prisma.TransactionClient,
+    oldStatus: TaskStatus,
+    newStatus: TaskStatus,
+    oldPosition: number,
+    newPosition: number
+  ): Promise<void> {
+    await tx.task.updateMany({
+      where: {
+        status: this.toPrismaStatus(oldStatus),
+        position: {
+          gt: oldPosition
+        }
+      },
+      data: {
+        position: {
+          decrement: 1
+        }
+      }
+    });
+
+    await tx.task.updateMany({
+      where: {
+        status: this.toPrismaStatus(newStatus),
+        position: {
+          gte: newPosition
+        }
+      },
+      data: {
+        position: {
+          increment: 1
+        }
+      }
+    });
   }
 
   private toDate(value: string | null | undefined): Date | null {
     return value ? new Date(`${value}T00:00:00.000Z`) : null;
+  }
+
+  private toDateFilterValue(value: string): Date {
+    return new Date(`${value}T00:00:00.000Z`);
+  }
+
+  private fromPrismaStatus(status: string): TaskStatus {
+    return (status === 'in_progress' ? 'in-progress' : status) as TaskStatus;
+  }
+
+  private toPrismaStatus(status: TaskStatus): PrismaTaskStatusValue {
+    const taskStatusEnum = (Prisma as unknown as { TaskStatus?: Record<string, PrismaTaskStatusValue> }).TaskStatus;
+
+    if (status === 'in-progress' && taskStatusEnum?.in_progress) {
+      return taskStatusEnum.in_progress;
+    }
+
+    return status as PrismaTaskStatusValue;
   }
 
   private async assertUsersExist(createdBy?: string, assigneeId?: string | null): Promise<void> {

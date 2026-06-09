@@ -1,33 +1,74 @@
 // src/features/task/components/TaskForm.tsx
 
+import { useEffect } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { doesTaskMatchBoardTaskFilters, type BoardTaskFilters } from '@/features/board/filters/taskFilters'
+import {
+  createTaskPayload,
+  createUpdatePayload,
+  getNextColumnPosition,
+  mapApiTask
+} from '@/features/board/utils/boardTasks'
+import { notify } from '@/utils/notify'
 import { BOARD_COLUMNS } from '../../../board/constants'
 import { PRIORITY_OPTIONS } from '../../constants'
-import { taskFormSchema } from '../../schemas/task.schema'
-import type { TaskFormMode, TaskFormValues } from '../../types'
+import { taskFormSchema, type TaskFormData } from '../../schemas/task.schema'
+import { taskService } from '../../task.service'
+import type { Task, TaskFormMode } from '../../types'
 import styles from './style.module.css'
+
+export type TaskAssigneeOption = {
+  id: string
+  name: string
+  email?: string
+}
 
 interface TaskFormProps {
   mode: TaskFormMode
-  initialValues: TaskFormValues
-  onSubmit: (values: TaskFormValues) => void | Promise<void>
+  task?: Task | null
+  initialValues: TaskFormData
+  tasks: Task[]
+  filters: BoardTaskFilters
+  assigneeOptions: TaskAssigneeOption[]
+  onCreated: (task: Task) => void
+  onUpdated: (previousTask: Task, task: Task, taskMatchesFilters: boolean, taskWasVisible: boolean) => void
+  onSaved: () => void
+  onError: (error: unknown) => void
   onCancel: () => void
+  onDirtyChange?: (dirty: boolean) => void
 }
 
-type TaskFormField = keyof TaskFormValues
+type TaskFormField = keyof TaskFormData
 
-export default function TaskForm({ mode, initialValues, onSubmit, onCancel }: TaskFormProps) {
+export default function TaskForm({
+  mode,
+  task,
+  initialValues,
+  tasks,
+  filters,
+  assigneeOptions,
+  onCreated,
+  onUpdated,
+  onSaved,
+  onError,
+  onCancel,
+  onDirtyChange
+}: TaskFormProps) {
   const {
-    formState: { errors, isSubmitting, touchedFields, isSubmitted },
+    formState: { errors, isDirty, isSubmitting, touchedFields, isSubmitted },
     handleSubmit,
     register
-  } = useForm<TaskFormValues>({
+  } = useForm<TaskFormData>({
     defaultValues: initialValues,
     mode: 'onTouched',
     reValidateMode: 'onChange',
     resolver: zodResolver(taskFormSchema)
   })
+
+  useEffect(() => {
+    onDirtyChange?.(isDirty)
+  }, [isDirty, onDirtyChange])
 
   const getFieldError = (name: TaskFormField) => {
     const shouldShowError = Boolean(touchedFields[name] || isSubmitted)
@@ -35,20 +76,55 @@ export default function TaskForm({ mode, initialValues, onSubmit, onCancel }: Ta
     return shouldShowError ? errors[name]?.message : undefined
   }
 
+  const handleFormSubmit = async (values: TaskFormData) => {
+    try {
+      if (mode === 'edit' && task) {
+        const position =
+          values.columnId === task.columnId ? task.position : getNextColumnPosition(tasks, values.columnId, task.id)
+        const updatedTask = await taskService.updateTask(task.id, createUpdatePayload(values, position))
+        const mappedTask = mapApiTask(updatedTask)
+
+        onUpdated(
+          task,
+          mappedTask,
+          doesTaskMatchBoardTaskFilters(mappedTask, filters),
+          tasks.some(({ id }) => id === task.id)
+        )
+        notify.success('Task updated')
+        onSaved()
+        return
+      }
+
+      const position = getNextColumnPosition(tasks, values.columnId)
+      const createdTask = await taskService.createTask(createTaskPayload(values, position))
+      const mappedTask = mapApiTask(createdTask)
+
+      if (doesTaskMatchBoardTaskFilters(mappedTask, filters)) {
+        onCreated(mappedTask)
+      }
+
+      notify.success('Task created')
+      onSaved()
+    } catch (error) {
+      onError(error)
+      throw error
+    }
+  }
+
   const titleError = getFieldError('title')
   const descriptionError = getFieldError('description')
   const priorityError = getFieldError('priority')
-  const assigneeError = getFieldError('assignee')
+  const assigneeIdError = getFieldError('assigneeId')
   const dueDateError = getFieldError('dueDate')
   const columnIdError = getFieldError('columnId')
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit(onSubmit)} noValidate>
+    <form className={styles.form} onSubmit={handleSubmit(handleFormSubmit)} noValidate>
       <header className={styles.header}>
         <h2 className={styles.title} id='task-modal-title'>
           {mode === 'create' ? 'Create Task' : 'Edit Task'}
         </h2>
-        <p className={styles.description}>
+        <p className={styles.description} id='task-modal-description'>
           {mode === 'create' ? 'Add a new task to the board.' : 'Update the selected task information.'}
         </p>
       </header>
@@ -57,6 +133,7 @@ export default function TaskForm({ mode, initialValues, onSubmit, onCancel }: Ta
         <span>Title</span>
         <input
           {...register('title')}
+          data-autofocus
           aria-describedby={titleError ? 'task-title-error' : undefined}
           aria-invalid={Boolean(titleError)}
           placeholder='Enter task title'
@@ -93,14 +170,19 @@ export default function TaskForm({ mode, initialValues, onSubmit, onCancel }: Ta
       </label>
 
       <label className={styles.field}>
-        <span>Assignee</span>
-        <input
-          {...register('assignee')}
-          aria-describedby={assigneeError ? 'task-assignee-error' : undefined}
-          aria-invalid={Boolean(assigneeError)}
-          placeholder='Enter assignee name'
-        />
-        {assigneeError && <small id='task-assignee-error'>{assigneeError}</small>}
+        <span>Assigned</span>
+        <select
+          {...register('assigneeId')}
+          aria-describedby={assigneeIdError ? 'task-assignee-error' : undefined}
+          aria-invalid={Boolean(assigneeIdError)}
+        >
+          {assigneeOptions.map((assignee) => (
+            <option key={assignee.id} value={assignee.id}>
+              {assignee.email ? `${assignee.name} (${assignee.email})` : assignee.name}
+            </option>
+          ))}
+        </select>
+        {assigneeIdError && <small id='task-assignee-error'>{assigneeIdError}</small>}
       </label>
 
       <label className={styles.field}>

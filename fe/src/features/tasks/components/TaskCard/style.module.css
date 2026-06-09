@@ -1,12 +1,12 @@
 .card {
-  padding: 14px;
-  border: 1px solid #d9e2ec;
-  border-radius: 12px;
+  padding: 12px;
+  border: 1px solid #d8e0ec;
+  border-radius: 7px;
   background-color: #ffffff;
   transition:
-    box-shadow 0.2s ease,
-    transform 0.2s ease,
-    border-color 0.2s ease;
+    box-shadow 0.18s ease,
+    transform 0.18s ease,
+    border-color 0.18s ease;
 }
 
 .clickable {
@@ -15,35 +15,35 @@
 
 .card:hover {
   transform: translateY(-1px);
-  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
 }
 
 .overdue {
-  border-color: #dc2626;
-  background-color: #fff7f7;
+  border-color: #ef4444;
+  background-color: #fff8f8;
 }
 
 .header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 12px;
+  gap: 10px;
 }
 
 .title {
   margin: 0;
   color: #0f172a;
-  font-size: 15px;
-  font-weight: 700;
-  line-height: 1.4;
+  font-size: 13px;
+  font-weight: 850;
+  line-height: 1.35;
 }
 
 .description {
   display: -webkit-box;
-  margin: 10px 0 0;
+  margin: 9px 0 0;
   overflow: hidden;
-  color: #64748b;
-  font-size: 14px;
+  color: #58677d;
+  font-size: 13px;
   line-height: 1.5;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -51,25 +51,26 @@
 
 .priorityBadge {
   flex-shrink: 0;
-  padding: 4px 8px;
   border-radius: 999px;
+  padding: 4px 8px;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 850;
+  line-height: 1.25;
 }
 
 .priorityLow {
-  color: #166534;
-  background-color: #dcfce7;
+  color: #14703a;
+  background-color: #dff8e8;
 }
 
 .priorityMedium {
-  color: #92400e;
-  background-color: #fef3c7;
+  color: #a05a00;
+  background-color: #fff0d5;
 }
 
 .priorityHigh {
-  color: #991b1b;
-  background-color: #fee2e2;
+  color: #c52323;
+  background-color: #ffe0e0;
 }
 
 .priorityCritical {
@@ -81,10 +82,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  margin-top: 14px;
+  gap: 10px;
+  margin-top: 12px;
   color: #64748b;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .assignee {
@@ -94,18 +95,25 @@
   gap: 6px;
 }
 
+.assignee span:last-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .avatar {
   width: 22px;
   height: 22px;
   border-radius: 999px;
-  background-color: #e2e8f0;
+  background-color: #e2eaf4;
   display: inline-flex;
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
   color: #334155;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 850;
 }
 
 .dueDate {
@@ -115,5 +123,5 @@
 
 .overdueText {
   color: #dc2626;
-  font-weight: 700;
+  font-weight: 850;
 }

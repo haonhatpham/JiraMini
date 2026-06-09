@@ -14,8 +14,8 @@ export default class TaskController {
 
   public getTasks = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const query = req.query as unknown as ListTasksQuery;
-      const response = await this.taskService.findAll(query);
+      const query = (req.validated?.query ?? req.query) as ListTasksQuery;
+      const response = await this.taskService.findAll(query, req.user.id);
 
       res.status(HttpStatus.OK).json(response);
     } catch (error) {
@@ -26,7 +26,7 @@ export default class TaskController {
   public getTask = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { id } = req.params as unknown as TaskIdParams;
-      const task = await this.taskService.findById(id);
+      const task = await this.taskService.findById(id, req.user.id);
 
       res.status(HttpStatus.OK).json({
         data: task
@@ -39,7 +39,7 @@ export default class TaskController {
   public createTask = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const input = req.body as CreateTaskBody;
-      const task = await this.taskService.create(input);
+      const task = await this.taskService.create(input, req.user.id);
 
       res.status(HttpStatus.CREATED).json({
         data: task
@@ -53,7 +53,7 @@ export default class TaskController {
     try {
       const { id } = req.params as unknown as TaskIdParams;
       const input = req.body as UpdateTaskBody;
-      const task = await this.taskService.update(id, input);
+      const task = await this.taskService.update(id, input, req.user.id);
 
       res.status(HttpStatus.OK).json({
         data: task
@@ -67,7 +67,7 @@ export default class TaskController {
     try {
       const { id } = req.params as unknown as TaskIdParams;
       const input = req.body as UpdateTaskStatusBody;
-      const task = await this.taskService.updateStatus(id, input);
+      const task = await this.taskService.updateStatus(id, input, req.user.id);
 
       res.status(HttpStatus.OK).json({
         data: task
@@ -80,7 +80,7 @@ export default class TaskController {
   public deleteTask = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { id } = req.params as unknown as TaskIdParams;
-      await this.taskService.delete(id);
+      await this.taskService.delete(id, req.user.id);
 
       res.status(HttpStatus.NO_CONTENT).send();
     } catch (error) {

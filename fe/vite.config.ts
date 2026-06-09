@@ -11,7 +11,7 @@ export default defineConfig({
   css: {
     devSourcemap: true
   },
-  base: "/ECM-JiraMini/",
+  base: '/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')

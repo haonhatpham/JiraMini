@@ -7,9 +7,10 @@ import { HttpStatus } from '@/core/http/http-status.js';
 import { BadRequestException, ValidationException } from './common.exception.js';
 
 export const GENERIC_ERROR_RESPONSE: ErrorResponse = {
-  status: HttpStatus.INTERNAL,
-  code: 'UNKNOWN_ERROR',
-  message: 'Unknown error'
+  error: {
+    code: 'UNKNOWN_ERROR',
+    message: 'Unknown error'
+  }
 };
 
 const isProduction = env.NODE_ENV === 'production';
@@ -25,13 +26,14 @@ export function globalExceptionHandler(err: unknown, req: Request, res: Response
     });
     const shouldExpose = !isProduction || err.expose;
     const response: ErrorResponse = {
-      status: err.status,
-      code: err.code,
-      message: shouldExpose ? err.message : GENERIC_ERROR_RESPONSE.message
+      error: {
+        code: err.code,
+        message: shouldExpose ? err.message : GENERIC_ERROR_RESPONSE.error.message
+      }
     };
 
     if (err instanceof ValidationException) {
-      response.details = err.details;
+      response.error.details = err.details;
     }
 
     return res.status(err.status).json(response);
@@ -46,13 +48,14 @@ export function globalExceptionHandler(err: unknown, req: Request, res: Response
   // Development mode
   if (!isProduction && err instanceof Error) {
     return res.status(HttpStatus.INTERNAL).json({
-      status: HttpStatus.INTERNAL,
-      code: 'UNKNOWN_ERROR',
-      message: err.message
+      error: {
+        code: 'UNKNOWN_ERROR',
+        message: err.message
+      }
     });
   }
   // Production mode
-  return res.status(GENERIC_ERROR_RESPONSE.status).json(GENERIC_ERROR_RESPONSE);
+  return res.status(HttpStatus.INTERNAL).json(GENERIC_ERROR_RESPONSE);
 }
 
 export function malformedErrorHandler(err: any, req: Request, res: Response, next: NextFunction) {

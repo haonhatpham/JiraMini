@@ -1,6 +1,6 @@
 // src/features/task/constants.ts
 
-import type { TaskPriority } from './types'
+import type { TaskPriority } from '@jiramini/shared/task'
 
 export const PRIORITY_OPTIONS: {
   value: TaskPriority

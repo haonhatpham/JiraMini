@@ -1,0 +1,235 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background-color: rgba(15, 23, 42, 0.55);
+}
+
+.modal {
+  position: relative;
+  width: min(100%, 560px);
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  border: 1px solid #d9e2ec;
+  border-radius: 10px;
+  padding: 18px 22px 20px;
+  background-color: #ffffff;
+  box-shadow: 0 24px 80px rgba(15, 23, 42, 0.22);
+  outline: none;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+.closeButton {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: inline-flex;
+  width: 30px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #334155;
+  cursor: pointer;
+}
+
+.closeButton:hover {
+  color: #0f172a;
+  background-color: #f1f5f9;
+}
+
+.header {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 10px;
+  padding-right: 34px;
+}
+
+.taskCode {
+  display: inline-flex;
+  min-height: 26px;
+  align-items: center;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  padding: 4px 10px;
+  color: #1d4ed8;
+  background-color: #eff6ff;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.title {
+  margin: 0;
+  color: #0f172a;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.details {
+  display: grid;
+  gap: 14px;
+  margin: 22px 0 0;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 128px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.row dt {
+  color: #334155;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.row dd {
+  margin: 0;
+  color: #0f172a;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.priorityBadge,
+.statusBadge {
+  display: inline-flex;
+  min-height: 24px;
+  align-items: center;
+  border-radius: 999px;
+  padding: 4px 9px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.priorityLow {
+  color: #166534;
+  background-color: #dcfce7;
+}
+
+.priorityMedium {
+  color: #92400e;
+  background-color: #fef3c7;
+}
+
+.priorityHigh {
+  color: #991b1b;
+  background-color: #fee2e2;
+}
+
+.priorityCritical {
+  color: #ffffff;
+  background-color: #dc2626;
+}
+
+.statusBadge {
+  color: #1d4ed8;
+  background-color: #dbeafe;
+}
+
+.assignee {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.avatar {
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  color: #1e293b;
+  background-color: #e2e8f0;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 22px;
+}
+
+.editButton,
+.deleteButton,
+.cancelButton {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.editButton {
+  border: 1px solid #2563eb;
+  color: #2563eb;
+}
+
+.editButton:hover {
+  background-color: #eff6ff;
+}
+
+.deleteButton {
+  border: 1px solid #ef4444;
+  color: #dc2626;
+}
+
+.deleteButton:hover {
+  background-color: #fff1f2;
+}
+
+.cancelButton {
+  border: 1px solid #64748b;
+  color: #334155;
+}
+
+.cancelButton:hover {
+  background-color: #e2e8f0;
+}
+
+@media (max-width: 560px) {
+  .backdrop {
+    padding: 12px;
+  }
+
+  .modal {
+    padding: 18px;
+  }
+
+  .header,
+  .row,
+  .actions {
+    grid-template-columns: 1fr;
+  }
+
+  .row {
+    gap: 4px;
+  }
+}

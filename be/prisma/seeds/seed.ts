@@ -1,15 +1,23 @@
 import { PrismaClient } from '@prisma/client';
-import { seedTasks } from './task.seed.js';
-import { seedUsers } from './user.seed.js';
+import { taskSeeds, seedTasks } from './task.seed.js';
+import { SEED_USER_PASSWORD, seedUsers, userSeeds } from './user.seed.js';
 
 const prisma = new PrismaClient();
 
-async function main(): Promise<void> {
-  console.log('Starting database seeding...');
+async function resetDatabase(): Promise<void> {
+  await prisma.task.deleteMany();
+  await prisma.user.deleteMany();
+}
 
+async function main(): Promise<void> {
+  console.log('Starting database reset and seeding...');
+
+  await resetDatabase();
   await seedUsers(prisma);
   await seedTasks(prisma);
 
+  console.log(`Seeded ${userSeeds.length} users and ${taskSeeds.length} tasks.`);
+  console.log(`Seed password for all users: ${SEED_USER_PASSWORD}`);
   console.log('Database seeding completed.');
 }
 

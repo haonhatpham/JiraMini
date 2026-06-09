@@ -13,7 +13,7 @@ const envSchema = z.object({
   // App routing prefix validation and sanitation
   APP_PREFIX: z
     .string()
-    .default('/api')
+    .default('/v1/api')
     .transform((val) => {
       let prefix = val.trim();
       if (!prefix.startsWith('/')) prefix = `/${prefix}`;

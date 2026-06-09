@@ -8,6 +8,8 @@ import hpp from 'hpp';
 import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from './swagger.js';
 
 class App {
   public app: express.Application;
@@ -20,6 +22,7 @@ class App {
     this.production = env.NODE_ENV === 'production' ? true : false;
     this.initializeMiddlewares();
     this.initializeRoutes(routes);
+    this.initializeSwagger();
     this.initializeErrorHandling();
     this.connectToDatabase();
   }
@@ -62,6 +65,10 @@ class App {
     } catch (error) {
       logger.error(error, `${LogScope.DATABASE} Database connection failed`);
     }
+  }
+
+  private initializeSwagger(): void {
+    this.app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
   }
 }
 

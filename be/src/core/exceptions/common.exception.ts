@@ -1,4 +1,5 @@
 import { HttpStatus } from '@/core/http/http-status.js';
+import type { ErrorDetail } from '@/core/http/api-response.types.js';
 import { HttpException } from './http.exception.js';
 
 export class BadRequestException extends HttpException {
@@ -10,6 +11,18 @@ export class BadRequestException extends HttpException {
 export class UnauthorizedException extends HttpException {
   constructor(message = 'Unauthorized', code = 'UNAUTHORIZED') {
     super(HttpStatus.UNAUTHORIZED, code, message);
+  }
+}
+
+export class ExpiredTokenException extends UnauthorizedException {
+  constructor(message = 'Token has expired') {
+    super(message, 'TOKEN_EXPIRED');
+  }
+}
+
+export class InvalidTokenException extends UnauthorizedException {
+  constructor(message = 'Token is invalid') {
+    super(message, 'INVALID_TOKEN');
   }
 }
 
@@ -33,7 +46,7 @@ export class NotFoundException extends HttpException {
 export class ValidationException extends HttpException {
   constructor(
     message = 'Validation Error',
-    public readonly details?: Record<string, unknown>
+    public readonly details?: ErrorDetail[]
   ) {
     super(HttpStatus.BAD_REQUEST, 'VALIDATION_ERROR', message);
   }

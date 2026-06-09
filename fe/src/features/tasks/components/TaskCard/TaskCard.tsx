@@ -7,17 +7,17 @@ import styles from './style.module.css'
 
 interface TaskCardProps {
   task: Task
-  onEdit?: (task: Task) => void
+  onOpen?: (task: Task) => void
 }
 
-export default function TaskCard({ task, onEdit }: TaskCardProps) {
+export default function TaskCard({ task, onOpen }: TaskCardProps) {
   const overdue = isOverdue(task.dueDate)
-  const clickable = Boolean(onEdit)
+  const clickable = Boolean(onOpen)
 
   return (
     <article
       className={`${styles.card} ${clickable ? styles.clickable : ''} ${overdue ? styles.overdue : ''}`}
-      onClick={onEdit ? () => onEdit(task) : undefined}
+      onClick={onOpen ? () => onOpen(task) : undefined}
     >
       <header className={styles.header}>
         <h3 className={styles.title}>{task.title}</h3>
@@ -35,9 +35,11 @@ export default function TaskCard({ task, onEdit }: TaskCardProps) {
           <span>{task.assignee}</span>
         </div>
 
-        <time className={`${styles.dueDate} ${overdue ? styles.overdueText : ''}`} dateTime={task.dueDate}>
-          {task.dueDate}
-        </time>
+        {task.dueDate && (
+          <time className={`${styles.dueDate} ${overdue ? styles.overdueText : ''}`} dateTime={task.dueDate}>
+            {task.dueDate}
+          </time>
+        )}
       </footer>
     </article>
   )

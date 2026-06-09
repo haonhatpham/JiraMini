@@ -1,10 +1,20 @@
 import { Prisma } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import jwt, { type JwtPayload, type SignOptions, type VerifyOptions } from 'jsonwebtoken';
-import { BadRequestException, UnauthorizedException } from '@/core/exceptions/common.exception.js';
+import {
+  BadRequestException,
+  ExpiredTokenException,
+  InvalidTokenException,
+  UnauthorizedException
+} from '@/core/exceptions/common.exception.js';
 import { prisma } from '@/core/database/prisma.js';
 import { env } from '@/env.js';
-import type { AuthResponseDto, AuthTokenPayload, AuthUserDto, LoginInput, RegisterInput } from './auth.type.js';
+import type { AuthResponseDto, AuthUserDto, LoginInput, RegisterInput } from './auth.schema.js';
+
+type AuthTokenPayload = {
+  sub: string;
+  email: string;
+};
 
 export default class AuthService {
   public async register(input: RegisterInput): Promise<AuthResponseDto> {
@@ -62,19 +72,35 @@ export default class AuthService {
     };
   }
 
-  public async getProfile(token: string): Promise<AuthUserDto> {
-    const payload = this.verifyAccessToken(token);
-    const user = await prisma.user.findUnique({
-      where: {
-        id: payload.sub
-      }
-    });
+  public verifyAccessToken(token: string): AuthTokenPayload {
+    const options: VerifyOptions = {
+      issuer: env.JWT_ISSUER
+    };
 
-    if (!user) {
-      throw new UnauthorizedException('Invalid token user');
+    if (env.JWT_AUDIENCE) {
+      options.audience = env.JWT_AUDIENCE;
     }
 
-    return this.mapUser(user);
+    let decoded: string | JwtPayload;
+
+    try {
+      decoded = jwt.verify(token, env.JWT_SECRET, options);
+    } catch (error) {
+      if (error instanceof jwt.TokenExpiredError) {
+        throw new ExpiredTokenException();
+      }
+
+      throw new InvalidTokenException();
+    }
+
+    if (typeof decoded !== 'object' || typeof decoded.sub !== 'string' || typeof decoded.email !== 'string') {
+      throw new InvalidTokenException();
+    }
+
+    return {
+      sub: decoded.sub,
+      email: decoded.email
+    };
   }
 
   private signAccessToken(payload: AuthTokenPayload): string {
@@ -88,27 +114,6 @@ export default class AuthService {
     }
 
     return jwt.sign(payload, env.JWT_SECRET, options);
-  }
-
-  private verifyAccessToken(token: string): AuthTokenPayload {
-    const options: VerifyOptions = {
-      issuer: env.JWT_ISSUER
-    };
-
-    if (env.JWT_AUDIENCE) {
-      options.audience = env.JWT_AUDIENCE;
-    }
-
-    const decoded = jwt.verify(token, env.JWT_SECRET, options) as JwtPayload;
-
-    if (typeof decoded !== 'object' || typeof decoded.sub !== 'string' || typeof decoded.email !== 'string') {
-      throw new UnauthorizedException('Invalid token');
-    }
-
-    return {
-      sub: decoded.sub,
-      email: decoded.email
-    };
   }
 
   private mapUser(user: {

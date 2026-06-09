@@ -1,0 +1,370 @@
+
+> nodejs-setup@1.0.0 dev
+> tsx watch ./src/server.ts
+
+[2026-06-07 09:18:25] [32mINFO[39m: [36m[APP] App listening on the port 3001[39m
+[2026-06-07 09:18:25] [32mINFO[39m: [36m[DATABASE] Connected to the database successfully[39m
+[2026-06-07 09:19:01] [33mWARN[39m:
+    [35mcode[39m: "UNAUTHORIZED"
+    [35mstatus[39m: 401
+    [35mmessage[39m: "Authorization header is required"
+    [35mmethod[39m: "GET"
+    [35mpath[39m: "/v1/api/tasks"
+[2026-06-07 09:19:01] [33mWARN[39m: [36m[REQUEST] ::1 GET /v1/api/tasks 401 16.68ms[39m
+[2026-06-07 09:19:01] [33mWARN[39m: [36m[REQUEST] ::1 GET /api/tasks 404 8.61ms[39m
+[2026-06-07 10:56:05] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/auth/login 204 6.08ms[39m
+[2026-06-07 10:56:05] [33mWARN[39m:
+    [35mcode[39m: "UNAUTHORIZED"
+    [35mstatus[39m: 401
+    [35mmessage[39m: "Invalid email or password"
+    [35mmethod[39m: "POST"
+    [35mpath[39m: "/v1/api/auth/login"
+[2026-06-07 10:56:05] [33mWARN[39m: [36m[REQUEST] ::1 POST /v1/api/auth/login 401 469.92ms[39m
+[2026-06-07 10:56:10] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/auth/login 204 0.82ms[39m
+[2026-06-07 10:56:10] [33mWARN[39m:
+    [35mcode[39m: "UNAUTHORIZED"
+    [35mstatus[39m: 401
+    [35mmessage[39m: "Invalid email or password"
+    [35mmethod[39m: "POST"
+    [35mpath[39m: "/v1/api/auth/login"
+[2026-06-07 10:56:10] [33mWARN[39m: [36m[REQUEST] ::1 POST /v1/api/auth/login 401 114.67ms[39m
+[2026-06-07 10:56:15] [33mWARN[39m:
+    [35mcode[39m: "UNAUTHORIZED"
+    [35mstatus[39m: 401
+    [35mmessage[39m: "Invalid email or password"
+    [35mmethod[39m: "POST"
+    [35mpath[39m: "/v1/api/auth/login"
+[2026-06-07 10:56:15] [33mWARN[39m: [36m[REQUEST] ::1 POST /v1/api/auth/login 401 100.64ms[39m
+[2026-06-07 10:56:17] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/auth/login 204 0.61ms[39m
+[2026-06-07 10:56:17] [33mWARN[39m:
+    [35mcode[39m: "UNAUTHORIZED"
+    [35mstatus[39m: 401
+    [35mmessage[39m: "Invalid email or password"
+    [35mmethod[39m: "POST"
+    [35mpath[39m: "/v1/api/auth/login"
+[2026-06-07 10:56:17] [33mWARN[39m: [36m[REQUEST] ::1 POST /v1/api/auth/login 401 95.92ms[39m
+[2026-06-07 10:56:21] [33mWARN[39m:
+    [35mcode[39m: "UNAUTHORIZED"
+    [35mstatus[39m: 401
+    [35mmessage[39m: "Invalid email or password"
+    [35mmethod[39m: "POST"
+    [35mpath[39m: "/v1/api/auth/login"
+[2026-06-07 10:56:21] [33mWARN[39m: [36m[REQUEST] ::1 POST /v1/api/auth/login 401 115.57ms[39m
+[2026-06-07 10:56:24] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/auth/login 204 0.41ms[39m
+[2026-06-07 10:56:24] [33mWARN[39m:
+    [35mcode[39m: "UNAUTHORIZED"
+    [35mstatus[39m: 401
+    [35mmessage[39m: "Invalid email or password"
+    [35mmethod[39m: "POST"
+    [35mpath[39m: "/v1/api/auth/login"
+[2026-06-07 10:56:24] [33mWARN[39m: [36m[REQUEST] ::1 POST /v1/api/auth/login 401 94.33ms[39m
+[2026-06-07 10:56:28] [33mWARN[39m:
+    [35mcode[39m: "UNAUTHORIZED"
+    [35mstatus[39m: 401
+    [35mmessage[39m: "Invalid email or password"
+    [35mmethod[39m: "POST"
+    [35mpath[39m: "/v1/api/auth/login"
+[2026-06-07 10:56:28] [33mWARN[39m: [36m[REQUEST] ::1 POST /v1/api/auth/login 401 96.73ms[39m
+[2026-06-07 10:56:30] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/auth/login 204 0.63ms[39m
+[2026-06-07 10:56:31] [33mWARN[39m:
+    [35mcode[39m: "UNAUTHORIZED"
+    [35mstatus[39m: 401
+    [35mmessage[39m: "Invalid email or password"
+    [35mmethod[39m: "POST"
+    [35mpath[39m: "/v1/api/auth/login"
+[2026-06-07 10:56:31] [33mWARN[39m: [36m[REQUEST] ::1 POST /v1/api/auth/login 401 114.64ms[39m
+[2026-06-07 10:57:21] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/auth/login 204 0.51ms[39m
+[2026-06-07 10:57:21] [32mINFO[39m: [36m[REQUEST] ::1 POST /v1/api/auth/login 200 141.40ms[39m
+[2026-06-07 10:57:22] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/auth/login 204 0.53ms[39m
+[2026-06-07 10:57:22] [32mINFO[39m: [36m[REQUEST] ::1 POST /v1/api/auth/login 200 110.44ms[39m
+[2026-06-07 10:57:22] [32mINFO[39m: [36m[REQUEST] ::1 POST /v1/api/auth/login 200 89.05ms[39m
+[2026-06-07 10:57:23] [32mINFO[39m: [36m[REQUEST] ::1 POST /v1/api/auth/login 200 98.24ms[39m
+[2026-06-07 10:57:23] [32mINFO[39m: [36m[REQUEST] ::1 POST /v1/api/auth/login 200 114.12ms[39m
+[2026-06-07 10:57:23] [32mINFO[39m: [36m[REQUEST] ::1 POST /v1/api/auth/login 200 98.38ms[39m
+[2026-06-07 10:57:23] [32mINFO[39m: [36m[REQUEST] ::1 POST /v1/api/auth/login 200 107.18ms[39m
+[2026-06-07 11:01:39] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/auth/login 204 0.46ms[39m
+[2026-06-07 11:01:39] [32mINFO[39m: [36m[REQUEST] ::1 POST /v1/api/auth/login 200 87.00ms[39m
+[2026-06-07 11:01:39] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/auth/login 204 0.23ms[39m
+[2026-06-07 11:01:39] [32mINFO[39m: [36m[REQUEST] ::1 POST /v1/api/auth/login 200 52.68ms[39m
+[2026-06-07 11:01:42] [32mINFO[39m: [36m[REQUEST] ::1 POST /v1/api/auth/login 200 53.01ms[39m
+[2026-06-07 11:01:44] [32mINFO[39m: [36m[REQUEST] ::1 POST /v1/api/auth/login 200 51.41ms[39m
+[2026-06-07 11:01:44] [32mINFO[39m: [36m[REQUEST] ::1 POST /v1/api/auth/login 200 51.00ms[39m
+[2026-06-07 11:01:44] [32mINFO[39m: [36m[REQUEST] ::1 POST /v1/api/auth/login 200 51.70ms[39m
+[2026-06-07 11:01:45] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/auth/login 204 0.41ms[39m
+[2026-06-07 11:01:45] [32mINFO[39m: [36m[REQUEST] ::1 POST /v1/api/auth/login 200 51.92ms[39m
+[2026-06-07 11:01:45] [32mINFO[39m: [36m[REQUEST] ::1 POST /v1/api/auth/login 200 52.86ms[39m
+[2026-06-07 11:02:14] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/auth/login 204 0.25ms[39m
+[2026-06-07 11:02:14] [32mINFO[39m: [36m[REQUEST] ::1 POST /v1/api/auth/login 200 81.55ms[39m
+[2026-06-07 11:02:24] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/auth/login 204 0.42ms[39m
+[2026-06-07 11:02:24] [32mINFO[39m: [36m[REQUEST] ::1 POST /v1/api/auth/login 200 117.42ms[39m
+[2026-06-07 11:02:24] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/auth/login 204 0.44ms[39m
+[2026-06-07 11:02:25] [32mINFO[39m: [36m[REQUEST] ::1 POST /v1/api/auth/login 200 129.38ms[39m
+[2026-06-07 11:02:25] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/auth/login 204 0.41ms[39m
+[2026-06-07 11:02:25] [32mINFO[39m: [36m[REQUEST] ::1 POST /v1/api/auth/login 200 116.97ms[39m
+[2026-06-07 11:03:44] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 204 0.29ms[39m
+[2026-06-07 11:03:44] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/users 204 0.15ms[39m
+[2026-06-07 11:03:45] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 200 8.43ms[39m
+[2026-06-07 11:03:45] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 200 59.78ms[39m
+[2026-06-07 11:03:46] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 204 0.27ms[39m
+[2026-06-07 11:03:46] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/users 204 0.17ms[39m
+[2026-06-07 11:03:46] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 200 1.98ms[39m
+[2026-06-07 11:03:46] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 200 4.97ms[39m
+[2026-06-07 11:03:56] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 204 0.41ms[39m
+[2026-06-07 11:03:56] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/users 204 0.24ms[39m
+[2026-06-07 11:03:56] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 304 1.87ms[39m
+[2026-06-07 11:03:56] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 304 6.39ms[39m
+[2026-06-07 11:06:27] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 204 0.23ms[39m
+[2026-06-07 11:06:27] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/users 204 0.15ms[39m
+[2026-06-07 11:06:27] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 304 2.99ms[39m
+[2026-06-07 11:06:27] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 204 0.16ms[39m
+[2026-06-07 11:06:27] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/users 204 0.33ms[39m
+[2026-06-07 11:06:27] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 304 8.74ms[39m
+[2026-06-07 11:06:27] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 304 1.35ms[39m
+[2026-06-07 11:06:27] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 304 3.40ms[39m
+[2026-06-07 11:06:35] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 204 0.51ms[39m
+[2026-06-07 11:06:35] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/users 204 0.18ms[39m
+[2026-06-07 11:06:35] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 304 2.13ms[39m
+[2026-06-07 11:06:35] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 304 6.11ms[39m
+[2026-06-07 11:06:35] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 304 1.73ms[39m
+[2026-06-07 11:06:35] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 304 4.40ms[39m
+[2026-06-07 11:13:15] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 204 0.39ms[39m
+[2026-06-07 11:13:15] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/users 204 0.29ms[39m
+[2026-06-07 11:13:15] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 304 48.88ms[39m
+[2026-06-07 11:13:15] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 304 52.87ms[39m
+[2026-06-07 11:16:40] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/auth/login 204 0.37ms[39m
+[2026-06-07 11:16:40] [32mINFO[39m: [36m[REQUEST] ::1 POST /v1/api/auth/login 200 108.61ms[39m
+[2026-06-07 11:16:40] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 204 0.23ms[39m
+[2026-06-07 11:16:40] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/users 204 0.18ms[39m
+[2026-06-07 11:16:40] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 304 4.18ms[39m
+[2026-06-07 11:16:40] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 304 7.28ms[39m
+[2026-06-07 11:31:10] [33mWARN[39m:
+    [35mcode[39m: "UNAUTHORIZED"
+    [35mstatus[39m: 401
+    [35mmessage[39m: "Invalid email or password"
+    [35mmethod[39m: "POST"
+    [35mpath[39m: "/v1/api/auth/login"
+[2026-06-07 11:31:10] [33mWARN[39m: [36m[REQUEST] ::1 POST /v1/api/auth/login 401 38.64ms[39m
+[2026-06-07 11:31:26] [32mINFO[39m: [36m[REQUEST] ::1 POST /v1/api/auth/login 200 103.60ms[39m
+[2026-06-07 11:41:57] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks 200 50.91ms[39m
+[2026-06-07 12:02:56] [32mINFO[39m: [36m[REQUEST] ::1 PATCH /v1/api/tasks/cccccccc-cccc-cccc-cccc-cccccccccccc/status 200 78.95ms[39m
+[2026-06-07 12:03:00] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 204 0.78ms[39m
+[2026-06-07 12:03:00] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/users 204 0.58ms[39m
+[2026-06-07 12:03:00] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 200 12.92ms[39m
+[2026-06-07 12:03:00] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 304 40.39ms[39m
+[2026-06-07 12:23:43] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 204 0.41ms[39m
+[2026-06-07 12:23:43] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/users 204 0.13ms[39m
+[2026-06-07 12:23:43] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 204 0.20ms[39m
+[2026-06-07 12:23:43] [33mWARN[39m:
+    [35mcode[39m: "TOKEN_EXPIRED"
+    [35mstatus[39m: 401
+    [35mmessage[39m: "Token has expired"
+    [35mmethod[39m: "GET"
+    [35mpath[39m: "/v1/api/tasks?limit=100&sortBy=position&sortOrder=asc"
+[2026-06-07 12:23:43] [33mWARN[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 401 1.40ms[39m
+[2026-06-07 12:23:43] [33mWARN[39m:
+    [35mcode[39m: "TOKEN_EXPIRED"
+    [35mstatus[39m: 401
+    [35mmessage[39m: "Token has expired"
+    [35mmethod[39m: "GET"
+    [35mpath[39m: "/v1/api/tasks?limit=100&sortBy=position&sortOrder=asc"
+[2026-06-07 12:23:43] [33mWARN[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 401 0.52ms[39m
+[2026-06-07 12:23:43] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/users 204 0.12ms[39m
+[2026-06-07 12:23:43] [33mWARN[39m:
+    [35mcode[39m: "TOKEN_EXPIRED"
+    [35mstatus[39m: 401
+    [35mmessage[39m: "Token has expired"
+    [35mmethod[39m: "GET"
+    [35mpath[39m: "/v1/api/users"
+[2026-06-07 12:23:43] [33mWARN[39m: [36m[REQUEST] ::1 GET /v1/api/users 401 0.80ms[39m
+[2026-06-07 12:23:43] [33mWARN[39m:
+    [35mcode[39m: "TOKEN_EXPIRED"
+    [35mstatus[39m: 401
+    [35mmessage[39m: "Token has expired"
+    [35mmethod[39m: "GET"
+    [35mpath[39m: "/v1/api/users"
+[2026-06-07 12:23:43] [33mWARN[39m: [36m[REQUEST] ::1 GET /v1/api/users 401 0.57ms[39m
+[2026-06-07 12:27:31] [33mWARN[39m:
+    [35mcode[39m: "UNAUTHORIZED"
+    [35mstatus[39m: 401
+    [35mmessage[39m: "Authorization header is required"
+    [35mmethod[39m: "GET"
+    [35mpath[39m: "/v1/api/tasks?limit=100&sortBy=position&sortOrder=asc"
+[2026-06-07 12:27:31] [33mWARN[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 401 0.65ms[39m
+[2026-06-07 12:27:31] [33mWARN[39m:
+    [35mcode[39m: "UNAUTHORIZED"
+    [35mstatus[39m: 401
+    [35mmessage[39m: "Authorization header is required"
+    [35mmethod[39m: "GET"
+    [35mpath[39m: "/v1/api/users"
+[2026-06-07 12:27:31] [33mWARN[39m: [36m[REQUEST] ::1 GET /v1/api/users 401 0.44ms[39m
+[2026-06-07 12:27:31] [33mWARN[39m:
+    [35mcode[39m: "UNAUTHORIZED"
+    [35mstatus[39m: 401
+    [35mmessage[39m: "Authorization header is required"
+    [35mmethod[39m: "GET"
+    [35mpath[39m: "/v1/api/tasks?limit=100&sortBy=position&sortOrder=asc"
+[2026-06-07 12:27:31] [33mWARN[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 401 0.43ms[39m
+[2026-06-07 12:27:31] [33mWARN[39m:
+    [35mcode[39m: "UNAUTHORIZED"
+    [35mstatus[39m: 401
+    [35mmessage[39m: "Authorization header is required"
+    [35mmethod[39m: "GET"
+    [35mpath[39m: "/v1/api/users"
+[2026-06-07 12:27:31] [33mWARN[39m: [36m[REQUEST] ::1 GET /v1/api/users 401 0.38ms[39m
+[2026-06-07 12:27:46] [33mWARN[39m:
+    [35mcode[39m: "UNAUTHORIZED"
+    [35mstatus[39m: 401
+    [35mmessage[39m: "Authorization header is required"
+    [35mmethod[39m: "GET"
+    [35mpath[39m: "/v1/api/tasks?limit=100&sortBy=position&sortOrder=asc"
+[2026-06-07 12:27:46] [33mWARN[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 401 0.56ms[39m
+[2026-06-07 12:27:46] [33mWARN[39m:
+    [35mcode[39m: "UNAUTHORIZED"
+    [35mstatus[39m: 401
+    [35mmessage[39m: "Authorization header is required"
+    [35mmethod[39m: "GET"
+    [35mpath[39m: "/v1/api/users"
+[2026-06-07 12:27:46] [33mWARN[39m: [36m[REQUEST] ::1 GET /v1/api/users 401 0.34ms[39m
+[2026-06-07 12:27:46] [33mWARN[39m:
+    [35mcode[39m: "UNAUTHORIZED"
+    [35mstatus[39m: 401
+    [35mmessage[39m: "Authorization header is required"
+    [35mmethod[39m: "GET"
+    [35mpath[39m: "/v1/api/tasks?limit=100&sortBy=position&sortOrder=asc"
+[2026-06-07 12:27:46] [33mWARN[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 401 0.43ms[39m
+[2026-06-07 12:27:46] [33mWARN[39m:
+    [35mcode[39m: "UNAUTHORIZED"
+    [35mstatus[39m: 401
+    [35mmessage[39m: "Authorization header is required"
+    [35mmethod[39m: "GET"
+    [35mpath[39m: "/v1/api/users"
+[2026-06-07 12:27:46] [33mWARN[39m: [36m[REQUEST] ::1 GET /v1/api/users 401 0.44ms[39m
+[2026-06-07 12:28:55] [33mWARN[39m:
+    [35mcode[39m: "UNAUTHORIZED"
+    [35mstatus[39m: 401
+    [35mmessage[39m: "Authorization header is required"
+    [35mmethod[39m: "GET"
+    [35mpath[39m: "/v1/api/tasks?limit=100&sortBy=position&sortOrder=asc"
+[2026-06-07 12:28:55] [33mWARN[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 401 0.57ms[39m
+[2026-06-07 12:28:55] [33mWARN[39m:
+    [35mcode[39m: "UNAUTHORIZED"
+    [35mstatus[39m: 401
+    [35mmessage[39m: "Authorization header is required"
+    [35mmethod[39m: "GET"
+    [35mpath[39m: "/v1/api/tasks?limit=100&sortBy=position&sortOrder=asc"
+[2026-06-07 12:28:55] [33mWARN[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 401 0.38ms[39m
+[2026-06-07 12:28:55] [33mWARN[39m:
+    [35mcode[39m: "UNAUTHORIZED"
+    [35mstatus[39m: 401
+    [35mmessage[39m: "Authorization header is required"
+    [35mmethod[39m: "GET"
+    [35mpath[39m: "/v1/api/users"
+[2026-06-07 12:28:55] [33mWARN[39m: [36m[REQUEST] ::1 GET /v1/api/users 401 0.35ms[39m
+[2026-06-07 12:28:55] [33mWARN[39m:
+    [35mcode[39m: "UNAUTHORIZED"
+    [35mstatus[39m: 401
+    [35mmessage[39m: "Authorization header is required"
+    [35mmethod[39m: "GET"
+    [35mpath[39m: "/v1/api/users"
+[2026-06-07 12:28:55] [33mWARN[39m: [36m[REQUEST] ::1 GET /v1/api/users 401 0.35ms[39m
+[2026-06-07 12:31:48] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/auth/login 204 0.45ms[39m
+[2026-06-07 12:31:49] [32mINFO[39m: [36m[REQUEST] ::1 POST /v1/api/auth/login 200 151.62ms[39m
+[2026-06-07 12:31:49] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 204 0.25ms[39m
+[2026-06-07 12:31:49] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/users 204 0.43ms[39m
+[2026-06-07 12:31:49] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 304 7.25ms[39m
+[2026-06-07 12:31:49] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 304 32.02ms[39m
+[2026-06-07 12:33:02] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 204 0.38ms[39m
+[2026-06-07 12:33:02] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/users 204 0.21ms[39m
+[2026-06-07 12:33:02] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 200 2.12ms[39m
+[2026-06-07 12:33:02] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 200 6.67ms[39m
+[2026-06-07 12:33:28] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 204 0.38ms[39m
+[2026-06-07 12:33:28] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/users 204 0.17ms[39m
+[2026-06-07 12:33:28] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 200 1.82ms[39m
+[2026-06-07 12:33:28] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 200 4.63ms[39m
+[2026-06-07 12:33:56] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 204 0.22ms[39m
+[2026-06-07 12:33:56] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/users 204 0.14ms[39m
+[2026-06-07 12:33:56] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 200 1.79ms[39m
+[2026-06-07 12:33:56] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 200 5.22ms[39m
+[2026-06-07 12:34:24] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 204 0.23ms[39m
+[2026-06-07 12:34:24] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/users 204 0.13ms[39m
+[2026-06-07 12:34:24] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 200 2.44ms[39m
+[2026-06-07 12:34:24] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 200 5.00ms[39m
+[2026-06-07 12:34:52] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 204 0.51ms[39m
+[2026-06-07 12:34:52] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/users 204 0.45ms[39m
+[2026-06-07 12:34:52] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 200 5.71ms[39m
+[2026-06-07 12:34:52] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 200 10.97ms[39m
+[2026-06-07 12:35:19] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 204 0.26ms[39m
+[2026-06-07 12:35:19] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/users 204 0.17ms[39m
+[2026-06-07 12:35:19] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 200 1.71ms[39m
+[2026-06-07 12:35:19] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 200 6.40ms[39m
+[2026-06-07 12:35:27] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 204 0.31ms[39m
+[2026-06-07 12:35:27] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/users 204 0.23ms[39m
+[2026-06-07 12:35:27] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 304 1.68ms[39m
+[2026-06-07 12:35:27] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 304 5.19ms[39m
+[2026-06-07 12:35:29] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 304 1.73ms[39m
+[2026-06-07 12:35:29] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 304 6.01ms[39m
+[2026-06-07 12:35:57] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 204 0.28ms[39m
+[2026-06-07 12:35:57] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/users 204 0.20ms[39m
+[2026-06-07 12:35:58] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 200 1.67ms[39m
+[2026-06-07 12:35:58] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 200 4.64ms[39m
+[2026-06-07 12:37:19] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 204 0.33ms[39m
+[2026-06-07 12:37:19] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/users 204 0.44ms[39m
+[2026-06-07 12:37:19] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 304 42.93ms[39m
+[2026-06-07 12:37:19] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 304 46.06ms[39m
+[2026-06-07 12:37:20] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 304 2.28ms[39m
+[2026-06-07 12:37:20] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 304 6.00ms[39m
+[2026-06-07 12:37:20] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 304 3.83ms[39m
+[2026-06-07 12:37:20] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 304 7.62ms[39m
+[2026-06-07 12:37:20] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 304 2.60ms[39m
+[2026-06-07 12:37:20] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 304 5.63ms[39m
+[2026-06-07 12:37:44] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 204 0.31ms[39m
+[2026-06-07 12:37:44] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/users 204 0.38ms[39m
+[2026-06-07 12:37:44] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 304 1.81ms[39m
+[2026-06-07 12:37:44] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 304 4.92ms[39m
+[2026-06-07 12:37:46] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 304 2.22ms[39m
+[2026-06-07 12:37:46] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 304 5.53ms[39m
+[2026-06-07 12:37:47] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 304 1.91ms[39m
+[2026-06-07 12:37:47] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 304 5.42ms[39m
+[2026-06-07 12:38:07] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/auth/login 204 0.34ms[39m
+[2026-06-07 12:38:07] [33mWARN[39m:
+    [35mcode[39m: "UNAUTHORIZED"
+    [35mstatus[39m: 401
+    [35mmessage[39m: "Invalid email or password"
+    [35mmethod[39m: "POST"
+    [35mpath[39m: "/v1/api/auth/login"
+[2026-06-07 12:38:07] [33mWARN[39m: [36m[REQUEST] ::1 POST /v1/api/auth/login 401 3.78ms[39m
+[2026-06-07 12:38:10] [33mWARN[39m:
+    [35mcode[39m: "UNAUTHORIZED"
+    [35mstatus[39m: 401
+    [35mmessage[39m: "Invalid email or password"
+    [35mmethod[39m: "POST"
+    [35mpath[39m: "/v1/api/auth/login"
+[2026-06-07 12:38:10] [33mWARN[39m: [36m[REQUEST] ::1 POST /v1/api/auth/login 401 2.56ms[39m
+[2026-06-07 12:38:23] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/auth/login 204 0.44ms[39m
+[2026-06-07 12:38:23] [32mINFO[39m: [36m[REQUEST] ::1 POST /v1/api/auth/login 200 97.47ms[39m
+[2026-06-07 12:38:23] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 204 0.22ms[39m
+[2026-06-07 12:38:23] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/users 204 0.25ms[39m
+[2026-06-07 12:38:23] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 304 1.41ms[39m
+[2026-06-07 12:38:23] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 304 5.40ms[39m
+[2026-06-07 12:38:25] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 304 1.89ms[39m
+[2026-06-07 12:38:25] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 304 5.39ms[39m
+[2026-06-07 12:38:25] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 304 1.64ms[39m
+[2026-06-07 12:38:25] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 304 4.97ms[39m
+[2026-06-07 12:38:25] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 304 2.32ms[39m
+[2026-06-07 12:38:25] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 304 5.57ms[39m
+[2026-06-07 12:38:25] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 304 1.70ms[39m
+[2026-06-07 12:38:25] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 304 5.67ms[39m
+[2026-06-07 12:38:25] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 304 2.15ms[39m
+[2026-06-07 12:38:25] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 304 5.39ms[39m
+[2026-06-07 12:38:25] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 304 1.36ms[39m
+[2026-06-07 12:38:25] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 304 5.12ms[39m
+[2026-06-07 12:39:23] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/tasks 204 0.39ms[39m
+[2026-06-07 12:39:23] [32mINFO[39m: [36m[REQUEST] ::1 POST /v1/api/tasks 201 36.68ms[39m
+[2026-06-07 12:39:26] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 204 0.43ms[39m
+[2026-06-07 12:39:26] [32mINFO[39m: [36m[REQUEST] ::1 OPTIONS /v1/api/users 204 0.41ms[39m
+[2026-06-07 12:39:26] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 304 2.03ms[39m
+[2026-06-07 12:39:26] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 200 6.29ms[39m
+[2026-06-07 12:39:26] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 304 1.54ms[39m
+[2026-06-07 12:39:26] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 304 5.50ms[39m
+[2026-06-07 12:39:26] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/users 304 3.37ms[39m
+[2026-06-07 12:39:26] [32mINFO[39m: [36m[REQUEST] ::1 GET /v1/api/tasks?limit=100&sortBy=position&sortOrder=asc 304 8.26ms[39m

@@ -1,0 +1,46 @@
+.page {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  padding: 32px 16px;
+  background: var(--bg);
+}
+
+.panel {
+  width: min(420px, 100%);
+  text-align: center;
+}
+
+.code {
+  color: var(--primary);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.title {
+  margin: 8px 0;
+  font-size: 32px;
+  line-height: 1.15;
+}
+
+.description {
+  color: var(--text-muted);
+}
+
+.link {
+  min-height: 40px;
+  margin-top: 24px;
+  padding: 0 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.link:hover {
+  background: var(--primary-hover);
+}

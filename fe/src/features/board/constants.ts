@@ -1,25 +1,23 @@
 // src/features/board/constants.ts
 import type { BoardColumn } from './types'
 
+export const BOARD_COLUMN_PAGE_SIZE = 4
+
 export const BOARD_COLUMNS: BoardColumn[] = [
   {
     id: 'backlog',
-    title: 'Backlog',
-    count: 0
+    title: 'Backlog'
   },
   {
     id: 'todo',
-    title: 'Todo',
-    count: 0
+    title: 'Todo'
   },
   {
     id: 'in-progress',
-    title: 'In Progress',
-    count: 0
+    title: 'In Progress'
   },
   {
     id: 'done',
-    title: 'Done',
-    count: 0
+    title: 'Done'
   }
 ]

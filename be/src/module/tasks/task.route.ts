@@ -1,4 +1,5 @@
 import Route from '@/core/interfaces/routes.interface.js';
+import authMiddleware from '@/core/middleware/auth.middleware.js';
 import validateRequest from '@/core/middleware/validation.middleware.js';
 import { env } from '@/env.js';
 import { Router } from 'express';
@@ -22,15 +23,31 @@ export default class TaskRoute implements Route {
   }
 
   private initializeRoutes(): void {
-    this.router.get(this.path, validateRequest(listTasksSchema), this.taskController.getTasks);
-    this.router.get(`${this.path}/:id`, validateRequest(getTaskByIdSchema), this.taskController.getTask);
-    this.router.post(this.path, validateRequest(createTaskSchema), this.taskController.createTask);
+    this.router.get(this.path, authMiddleware, validateRequest(listTasksSchema), this.taskController.getTasks);
+    this.router.get(
+      `${this.path}/:id`,
+      authMiddleware,
+      validateRequest(getTaskByIdSchema),
+      this.taskController.getTask
+    );
+    this.router.post(this.path, authMiddleware, validateRequest(createTaskSchema), this.taskController.createTask);
     this.router.patch(
       `${this.path}/:id/status`,
+      authMiddleware,
       validateRequest(updateTaskStatusSchema),
       this.taskController.updateTaskStatus
     );
-    this.router.patch(`${this.path}/:id`, validateRequest(updateTaskSchema), this.taskController.updateTask);
-    this.router.delete(`${this.path}/:id`, validateRequest(deleteTaskSchema), this.taskController.deleteTask);
+    this.router.put(
+      `${this.path}/:id`,
+      authMiddleware,
+      validateRequest(updateTaskSchema),
+      this.taskController.updateTask
+    );
+    this.router.delete(
+      `${this.path}/:id`,
+      authMiddleware,
+      validateRequest(deleteTaskSchema),
+      this.taskController.deleteTask
+    );
   }
 }

@@ -23,16 +23,16 @@ export declare const sortOrderSchema: z.ZodEnum<{
     asc: "asc";
     desc: "desc";
 }>;
-export declare const uuidSchema: z.ZodString;
+export declare const uuidSchema: z.ZodGUID;
 export declare const dateOnlySchema: z.ZodString;
 export declare const taskUserResponseSchema: z.ZodObject<{
-    id: z.ZodString;
-    email: z.ZodString;
+    id: z.ZodGUID;
+    email: z.ZodEmail;
     name: z.ZodString;
     avatarUrl: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>;
 export declare const taskResponseSchema: z.ZodObject<{
-    id: z.ZodString;
+    id: z.ZodGUID;
     title: z.ZodString;
     description: z.ZodNullable<z.ZodString>;
     priority: z.ZodEnum<{
@@ -48,66 +48,68 @@ export declare const taskResponseSchema: z.ZodObject<{
         done: "done";
     }>;
     position: z.ZodNumber;
-    assigneeId: z.ZodNullable<z.ZodString>;
-    createdBy: z.ZodString;
+    assigneeId: z.ZodNullable<z.ZodGUID>;
+    createdBy: z.ZodGUID;
     dueDate: z.ZodNullable<z.ZodString>;
-    createdAt: z.ZodString;
-    updatedAt: z.ZodString;
+    createdAt: z.ZodISODateTime;
+    updatedAt: z.ZodISODateTime;
     assignee: z.ZodNullable<z.ZodObject<{
-        id: z.ZodString;
-        email: z.ZodString;
+        id: z.ZodGUID;
+        email: z.ZodEmail;
         name: z.ZodString;
         avatarUrl: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>>;
     creator: z.ZodObject<{
-        id: z.ZodString;
-        email: z.ZodString;
+        id: z.ZodGUID;
+        email: z.ZodEmail;
         name: z.ZodString;
         avatarUrl: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>;
 }, z.core.$strip>;
 export declare const listTasksSchema: z.ZodObject<{
     query: z.ZodObject<{
-        status: z.ZodOptional<z.ZodEnum<{
+        status: z.ZodPreprocess<z.ZodOptional<z.ZodEnum<{
             backlog: "backlog";
             todo: "todo";
             "in-progress": "in-progress";
             done: "done";
-        }>>;
-        priority: z.ZodOptional<z.ZodEnum<{
+        }>>>;
+        priority: z.ZodPreprocess<z.ZodOptional<z.ZodArray<z.ZodEnum<{
             low: "low";
             medium: "medium";
             high: "high";
             critical: "critical";
-        }>>;
-        assigneeId: z.ZodOptional<z.ZodString>;
-        createdBy: z.ZodOptional<z.ZodString>;
-        search: z.ZodOptional<z.ZodString>;
-        page: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
-        limit: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
-        sortBy: z.ZodDefault<z.ZodEnum<{
+        }>>>>;
+        assigneeId: z.ZodPreprocess<z.ZodOptional<z.ZodGUID>>;
+        createdBy: z.ZodPreprocess<z.ZodOptional<z.ZodGUID>>;
+        dueDateFrom: z.ZodPreprocess<z.ZodOptional<z.ZodString>>;
+        dueDateTo: z.ZodPreprocess<z.ZodOptional<z.ZodString>>;
+        search: z.ZodPreprocess<z.ZodOptional<z.ZodString>>;
+        page: z.ZodPreprocess<z.ZodDefault<z.ZodCoercedNumber<unknown>>>;
+        limit: z.ZodPreprocess<z.ZodDefault<z.ZodCoercedNumber<unknown>>>;
+        sortBy: z.ZodPreprocess<z.ZodDefault<z.ZodEnum<{
             createdAt: "createdAt";
             dueDate: "dueDate";
             position: "position";
             priority: "priority";
             status: "status";
             title: "title";
-        }>>;
-        sortOrder: z.ZodDefault<z.ZodEnum<{
+        }>>>;
+        sortOrder: z.ZodPreprocess<z.ZodDefault<z.ZodEnum<{
             asc: "asc";
             desc: "desc";
-        }>>;
+        }>>>;
     }, z.core.$strip>;
 }, z.core.$strip>;
 export declare const getTaskByIdSchema: z.ZodObject<{
     params: z.ZodObject<{
-        id: z.ZodString;
+        id: z.ZodGUID;
     }, z.core.$strip>;
 }, z.core.$strip>;
 export declare const createTaskSchema: z.ZodObject<{
     body: z.ZodObject<{
         title: z.ZodString;
-        description: z.ZodPreprocess<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
+        description: z.ZodOptional<z.ZodPreprocess<z.ZodNullable<z.ZodString>>>;
         priority: z.ZodEnum<{
             low: "low";
             medium: "medium";
@@ -121,38 +123,37 @@ export declare const createTaskSchema: z.ZodObject<{
             done: "done";
         }>>;
         position: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
-        assigneeId: z.ZodPreprocess<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
-        createdBy: z.ZodString;
-        dueDate: z.ZodPreprocess<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
+        assigneeId: z.ZodOptional<z.ZodPreprocess<z.ZodNullable<z.ZodGUID>>>;
+        dueDate: z.ZodOptional<z.ZodPreprocess<z.ZodNullable<z.ZodString>>>;
     }, z.core.$strict>;
 }, z.core.$strip>;
 export declare const updateTaskSchema: z.ZodObject<{
     params: z.ZodObject<{
-        id: z.ZodString;
+        id: z.ZodGUID;
     }, z.core.$strip>;
     body: z.ZodObject<{
-        title: z.ZodOptional<z.ZodString>;
-        description: z.ZodPreprocess<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
-        priority: z.ZodOptional<z.ZodEnum<{
+        title: z.ZodString;
+        description: z.ZodPreprocess<z.ZodNullable<z.ZodString>>;
+        priority: z.ZodEnum<{
             low: "low";
             medium: "medium";
             high: "high";
             critical: "critical";
-        }>>;
-        status: z.ZodOptional<z.ZodEnum<{
+        }>;
+        status: z.ZodEnum<{
             backlog: "backlog";
             todo: "todo";
             "in-progress": "in-progress";
             done: "done";
-        }>>;
-        position: z.ZodOptional<z.ZodCoercedNumber<unknown>>;
-        assigneeId: z.ZodPreprocess<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
-        dueDate: z.ZodPreprocess<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
+        }>;
+        position: z.ZodCoercedNumber<unknown>;
+        assigneeId: z.ZodPreprocess<z.ZodNullable<z.ZodGUID>>;
+        dueDate: z.ZodPreprocess<z.ZodNullable<z.ZodString>>;
     }, z.core.$strict>;
 }, z.core.$strip>;
 export declare const updateTaskStatusSchema: z.ZodObject<{
     params: z.ZodObject<{
-        id: z.ZodString;
+        id: z.ZodGUID;
     }, z.core.$strip>;
     body: z.ZodObject<{
         status: z.ZodEnum<{
@@ -166,12 +167,12 @@ export declare const updateTaskStatusSchema: z.ZodObject<{
 }, z.core.$strip>;
 export declare const deleteTaskSchema: z.ZodObject<{
     params: z.ZodObject<{
-        id: z.ZodString;
+        id: z.ZodGUID;
     }, z.core.$strip>;
 }, z.core.$strip>;
 export declare const listTasksResponseSchema: z.ZodObject<{
     data: z.ZodArray<z.ZodObject<{
-        id: z.ZodString;
+        id: z.ZodGUID;
         title: z.ZodString;
         description: z.ZodNullable<z.ZodString>;
         priority: z.ZodEnum<{
@@ -187,20 +188,20 @@ export declare const listTasksResponseSchema: z.ZodObject<{
             done: "done";
         }>;
         position: z.ZodNumber;
-        assigneeId: z.ZodNullable<z.ZodString>;
-        createdBy: z.ZodString;
+        assigneeId: z.ZodNullable<z.ZodGUID>;
+        createdBy: z.ZodGUID;
         dueDate: z.ZodNullable<z.ZodString>;
-        createdAt: z.ZodString;
-        updatedAt: z.ZodString;
+        createdAt: z.ZodISODateTime;
+        updatedAt: z.ZodISODateTime;
         assignee: z.ZodNullable<z.ZodObject<{
-            id: z.ZodString;
-            email: z.ZodString;
+            id: z.ZodGUID;
+            email: z.ZodEmail;
             name: z.ZodString;
             avatarUrl: z.ZodNullable<z.ZodString>;
         }, z.core.$strip>>;
         creator: z.ZodObject<{
-            id: z.ZodString;
-            email: z.ZodString;
+            id: z.ZodGUID;
+            email: z.ZodEmail;
             name: z.ZodString;
             avatarUrl: z.ZodNullable<z.ZodString>;
         }, z.core.$strip>;
@@ -214,7 +215,7 @@ export declare const listTasksResponseSchema: z.ZodObject<{
 }, z.core.$strip>;
 export declare const taskDetailResponseSchema: z.ZodObject<{
     data: z.ZodObject<{
-        id: z.ZodString;
+        id: z.ZodGUID;
         title: z.ZodString;
         description: z.ZodNullable<z.ZodString>;
         priority: z.ZodEnum<{
@@ -230,20 +231,20 @@ export declare const taskDetailResponseSchema: z.ZodObject<{
             done: "done";
         }>;
         position: z.ZodNumber;
-        assigneeId: z.ZodNullable<z.ZodString>;
-        createdBy: z.ZodString;
+        assigneeId: z.ZodNullable<z.ZodGUID>;
+        createdBy: z.ZodGUID;
         dueDate: z.ZodNullable<z.ZodString>;
-        createdAt: z.ZodString;
-        updatedAt: z.ZodString;
+        createdAt: z.ZodISODateTime;
+        updatedAt: z.ZodISODateTime;
         assignee: z.ZodNullable<z.ZodObject<{
-            id: z.ZodString;
-            email: z.ZodString;
+            id: z.ZodGUID;
+            email: z.ZodEmail;
             name: z.ZodString;
             avatarUrl: z.ZodNullable<z.ZodString>;
         }, z.core.$strip>>;
         creator: z.ZodObject<{
-            id: z.ZodString;
-            email: z.ZodString;
+            id: z.ZodGUID;
+            email: z.ZodEmail;
             name: z.ZodString;
             avatarUrl: z.ZodNullable<z.ZodString>;
         }, z.core.$strip>;

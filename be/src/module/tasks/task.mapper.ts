@@ -1,4 +1,4 @@
-import { TaskStatus as PrismaTaskStatus, type Prisma, type User } from '@prisma/client';
+import { type Prisma, type User } from '@prisma/client';
 import { taskResponseSchema, type TaskResponse, type TaskStatus } from './task.schema.js';
 
 export type TaskWithRelations = Prisma.TaskGetPayload<{
@@ -8,10 +8,6 @@ export type TaskWithRelations = Prisma.TaskGetPayload<{
   };
 }>;
 
-function mapStatus(status: PrismaTaskStatus): TaskStatus {
-  return status === PrismaTaskStatus.in_progress ? 'in-progress' : status;
-}
-
 function mapTaskUser(user: User) {
   return {
     id: user.id,
@@ -19,6 +15,10 @@ function mapTaskUser(user: User) {
     name: user.name,
     avatarUrl: user.avatarUrl
   };
+}
+
+function mapStatus(status: string): TaskStatus {
+  return (status === 'in_progress' ? 'in-progress' : status) as TaskStatus;
 }
 
 function mapDateOnly(date: Date | null): string | null {

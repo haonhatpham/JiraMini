@@ -1,20 +1,18 @@
-// src/features/task/types.ts
-
-import type { BoardColumnId } from '../board/types'
-import type { TaskFormData } from './schemas/task.schema'
-
-export type TaskPriority = TaskFormData['priority']
+import type { TaskPriority, TaskStatus } from '@jiramini/shared/task'
 
 export interface Task {
   id: string
   title: string
   description: string
   priority: TaskPriority
+  assigneeId: string
   assignee: string
   dueDate: string
-  columnId: BoardColumnId
+  createdBy: string
+  createdAt: string
+  updatedAt: string
+  columnId: TaskStatus
+  position: number
 }
-
-export type TaskFormValues = TaskFormData
 
 export type TaskFormMode = 'create' | 'edit'

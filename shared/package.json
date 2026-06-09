@@ -10,6 +10,10 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
+    "./auth": {
+      "types": "./dist/auth.schema.d.ts",
+      "import": "./dist/auth.schema.js"
+    },
     "./task": {
       "types": "./dist/task.schema.d.ts",
       "import": "./dist/task.schema.js"
