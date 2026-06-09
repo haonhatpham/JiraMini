@@ -24,11 +24,10 @@
     "prettier": "prettier --check \"src/**/*.ts\"",
     "prettier:fix": "prettier --write \"src/**/*.ts\""
   },
-  "peerDependencies": {
+  "dependencies": {
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "typescript": "^6.0.3",
-    "zod": "^4.4.3"
+    "typescript": "^6.0.3"
   }
 }
