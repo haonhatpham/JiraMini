@@ -45,11 +45,16 @@ class App {
 
     if (this.production) {
       this.app.use(hpp());
-      this.app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+      this.app.use(
+        cors({
+          origin: env.CORS_ALLOWED_ORIGINS.length > 0 ? env.CORS_ALLOWED_ORIGINS : false,
+          credentials: env.CORS_CREDENTIALS
+        })
+      );
       this.app.use(helmet());
       this.app.use(compression());
     } else {
-      this.app.use(cors({ origin: true, credentials: true }));
+      this.app.use(cors({ origin: true, credentials: env.CORS_CREDENTIALS }));
     }
   }
 
