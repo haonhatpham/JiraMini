@@ -6,8 +6,10 @@ import { BOARD_COLUMN_PAGE_SIZE, BOARD_COLUMNS } from '../constants'
 import { toListTasksParams, type BoardTaskFilters } from '../filters/taskFilters'
 import type { BoardColumnLoadStateMap, BoardColumnRefreshRequest } from '../types'
 import { createInitialColumnLoadState } from './boardColumnState'
-import { getColumnFetchLimit } from './boardPagination'
-import { mapApiTask, normalizeTaskPositions } from './boardTasks'
+import { mapApiTask } from './boardTaskMapping'
+import { normalizeTaskPositions } from './boardTaskMovement'
+
+const MAX_BOARD_COLUMN_FETCH_LIMIT = 100
 
 export type BoardLoadData = {
   taskResponses: Record<TaskStatus, Awaited<ReturnType<typeof taskService.listTasks>>>
@@ -70,6 +72,10 @@ export function mapBoardLoadData({ taskResponses }: BoardLoadData): {
 
 export function getNextColumnLoadMoreLimit(loadedCount: number, totalCount: number): number {
   return getColumnFetchLimit(Math.min(loadedCount + BOARD_COLUMN_PAGE_SIZE, totalCount))
+}
+
+function getColumnFetchLimit(visibleCount: number): number {
+  return Math.min(Math.max(Math.ceil(visibleCount), 1), MAX_BOARD_COLUMN_FETCH_LIMIT)
 }
 
 export function getUniqueColumnRefreshRequests(requests: BoardColumnRefreshRequest[]): BoardColumnRefreshRequest[] {

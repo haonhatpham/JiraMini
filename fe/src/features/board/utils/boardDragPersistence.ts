@@ -3,7 +3,8 @@ import type { TaskStatus } from '@jiramini/shared/task'
 import { taskService } from '@/features/tasks/task.service'
 import type { Task } from '@/features/tasks/types'
 import type { BoardColumnRefreshRequest } from '../types'
-import { mapApiTask, moveTaskToPosition, normalizeTaskPositions } from './boardTasks'
+import { mapApiTask } from './boardTaskMapping'
+import { moveTaskToPosition, normalizeTaskPositions } from './boardTaskMovement'
 
 type BoardTaskMoveRefs = {
   latestMoveByTaskRef: MutableRefObject<Map<string, number>>

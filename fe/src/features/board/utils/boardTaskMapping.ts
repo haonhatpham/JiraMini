@@ -42,19 +42,8 @@ export function createAssigneeOptions(
   return options
 }
 
-export function createTaskPayload(values: TaskFormData, position: number): CreateTaskBody {
-  return {
-    title: values.title,
-    description: values.description || null,
-    priority: values.priority,
-    status: values.columnId,
-    position,
-    assigneeId: values.assigneeId || null,
-    dueDate: values.dueDate || null
-  }
-}
-
-export function createUpdatePayload(values: TaskFormData, position: number): UpdateTaskBody {
+// Create và Update dùng chung một payload shape, nên gộp thành một builder.
+export function buildTaskPayload(values: TaskFormData, position: number): CreateTaskBody & UpdateTaskBody {
   return {
     title: values.title,
     description: values.description || null,

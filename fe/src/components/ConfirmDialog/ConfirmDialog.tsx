@@ -1,8 +1,8 @@
 import { useId, useRef } from 'react'
 import { AlertTriangle, X } from 'lucide-react'
 import Button from '@/components/Button/Button'
-import { useFocusTrap } from '@/hook/useFocusTrap'
-import { useKeyboardShortcut } from '@/hook/useKeyboardShortcut'
+import { useFocusTrap } from '@/hooks/useFocusTrap'
+import { useKeyboardShortcut } from '@/hooks/useKeyboardShortcut'
 import styles from './styles.module.css'
 
 type ConfirmDialogVariant = 'default' | 'danger'

@@ -17,7 +17,6 @@
     "install:fe": "npm --prefix fe install",
     "install:be": "npm --prefix be install",
     "install:all": "npm --prefix shared install && npm --prefix fe install && npm --prefix be install"
-
   },
   "dependencies": {
     "swagger-ui-express": "^5.0.1",
@@ -25,6 +24,7 @@
   },
   "devDependencies": {
     "@types/swagger-ui-express": "^4.1.8",
-    "@types/yamljs": "^0.2.34"
+    "@types/yamljs": "^0.2.34",
+    "rimraf": "^6.1.3"
   }
 }

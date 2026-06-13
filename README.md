@@ -1,24 +1,36 @@
 # JiraMini
 
-Monorepo cho project JiraMini, gom frontend va backend trong cung mot repository.
+Monorepo cho project JiraMini — bảng Kanban quản lý task. Gồm frontend, backend và một package shared trong cùng một repository.
 
-## Cau truc
+## Cấu trúc
 
 ```text
 .
-+-- fe/   # React + Vite frontend
-+-- be/   # Node.js + Express backend
+├── fe/        # React 19 + Vite frontend
+├── be/        # Node.js + Express + Prisma backend
+├── shared/    # @jiramini/shared — Zod schema dùng chung FE ↔ BE
+└── docs/      # Tài liệu kiến trúc
 ```
 
-## Cai dat
+## Tài liệu
+
+- [docs/README.md](docs/README.md) — Tổng quan hệ thống & package `shared`
+- [docs/FRONTEND.md](docs/FRONTEND.md) — Kiến trúc & quy ước Frontend
+- [docs/BACKEND.md](docs/BACKEND.md) — Kiến trúc & quy ước Backend
+- [docs/DATABASE.md](docs/DATABASE.md) — Schema database & Prisma
+
+## Cài đặt
 
 ```powershell
 npm run install:all
 ```
 
-Hoac cai rieng tung phan:
+> `npm run install:all` cài lần lượt cho `shared`, `fe`, `be`.
+
+Hoặc cài riêng từng phần:
 
 ```powershell
+npm run install:shared
 npm run install:fe
 npm run install:be
 ```
@@ -41,7 +53,16 @@ Mac dinh frontend chay o port `3000`, backend chay o port `3001`.
 
 ## Build
 
+Package `shared` phải được build trước (FE và BE import từ `shared/dist`):
+
 ```powershell
+npm run build:all     # build:shared → build:fe → build:be
+```
+
+Hoặc build riêng:
+
+```powershell
+npm run build:shared
 npm run build:fe
 npm run build:be
 ```
@@ -133,7 +154,7 @@ Backend hiện tại đã sửa để dùng `CORS_ALLOWED_ORIGINS` trong product
 7. Deploy backend lên Railway/Render và set các env vars.
 8. Cập nhật `CORS_ALLOWED_ORIGINS` thành URL frontend.
 
-## Lint va format check
+## Lint và format check
 
 ```powershell
 npm run lint:fe

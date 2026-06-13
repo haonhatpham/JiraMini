@@ -43,20 +43,6 @@ const envSchema = z.object({
     .transform((val) => val.toLowerCase() === 'true'),
 
   /**
-   * Global API rate limit time window in milliseconds.
-   *
-   * Example:
-   * 900000 = 15 minutes
-   */
-  RATE_LIMIT_WINDOW_MS: z.coerce.number().default(900000),
-
-  /**
-   * Maximum number of requests allowed
-   * within the global rate limit window.
-   */
-  RATE_LIMIT_MAX_REQUESTS: z.coerce.number().default(100),
-
-  /**
    * Validates supported database connection strings for Prisma.
    *
    * Supported protocols:
@@ -124,15 +110,7 @@ const envSchema = z.object({
     .int()
     .min(4, { message: 'Salt rounds below 4 are cryptographically insecure' })
     .max(31, { message: 'Salt rounds above 31 will cause heavy CPU blockages' })
-    .default(10),
-
-  LOGIN_RATE_LIMIT_WINDOW_MS: z.coerce
-    .number()
-    .int()
-    .positive()
-    .default(15 * 60 * 1000),
-
-  LOGIN_RATE_LIMIT_MAX_REQUESTS: z.coerce.number().int().positive().max(100).default(5)
+    .default(10)
 });
 
 // Run synchronous configuration parsing

@@ -1,6 +1,6 @@
 import type { NextFunction, Request, RequestHandler, Response } from 'express';
 import { UnauthorizedException } from '@/core/exceptions/common.exception.js';
-import AuthService from '@/module/auth/auth.service.js';
+import AuthService from '@/modules/auth/auth.service.js';
 
 const authService = new AuthService();
 
